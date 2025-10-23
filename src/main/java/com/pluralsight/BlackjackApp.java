@@ -2,7 +2,6 @@ package com.pluralsight;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.Scanner;
 
 public class BlackjackApp {
@@ -29,7 +28,8 @@ public class BlackjackApp {
             System.out.print("""
                     Would you like to add another player?
                     (Y) Yes, add another player
-                    (N) No, begin the game""");
+                    (N) No, begin the game
+                    """);
 
             char choice = Character.toUpperCase(getValidString(input).charAt(0));
             switch (choice) {
@@ -47,6 +47,7 @@ public class BlackjackApp {
             }
         }
         playGame(input, table);
+        printResults(table);
     }
 
     public static void playGame(Scanner input, ArrayList<Player> table) {
@@ -76,11 +77,12 @@ public class BlackjackApp {
                     System.out.print(card.getName() + " ");
                 }
 
-                System.out.println("Your current total card value is: " + player.getValueOfHand());
+                System.out.println(": your current total card value is " + player.getValueOfHand());
                 System.out.println("""
                         Would you like to hit or stay?
                         (H) Hit, give me another card
-                        (S) Stay, I am satisfied with my hand""");
+                        (S) Stay, I am satisfied with my hand
+                        """);
 
                 char choice = Character.toUpperCase(getValidString(input).charAt(0));
                 switch (choice) {
@@ -99,9 +101,8 @@ public class BlackjackApp {
                         System.out.println("That is not a valid menu option.");
                 }
             }
-            System.out.println("Moving onto next player....");
+            System.out.println("Moving on....");
         }
-        printResults(table);
     }
 
     public static String getValidString(Scanner input) {
@@ -154,31 +155,36 @@ public class BlackjackApp {
 
     public static void printResults(ArrayList<Player> table) {
 
-        HashMap<String, Integer> playerAndScores = new HashMap<>();
+        ArrayList<String> winners = new ArrayList<>();
+        int highScore = 0;
+
         System.out.println("Now to reveal the results:");
         System.out.println("=====================================================================");
         System.out.printf("| %-15s | %-25s | %-5s |%n", "Player Name", "Cards", "Total");
         System.out.println("=====================================================================");
         for (Player player : table) {
+            String playerName = player.getName();
+            int score = player.getValueOfHand();
             System.out.printf("| %-15s | %-25s | %-5d |%n",
-                    player.getName(), getHandCardsStr(player), player.getValueOfHand());
-            playerAndScores.put(player.getName(), player.getValueOfHand());
+                    playerName, getHandCardsStr(player), score);
+            if (score <= 21) {
+                if (score > highScore) {
+                    highScore = score;
+                    winners.clear();
+                    winners.add(playerName);
+                } else if (score == highScore) {
+                    winners.add(playerName);
+                }
+            }
         }
         System.out.println("=====================================================================");
 
-        System.out.println("And the winner(s)....");
-
-
-        int highScore = 0;
-        for (String playerName : playerAndScores.keySet()) {
-            int score = playerAndScores.get(playerName);
-            if (score >= highScore) {
-                highScore = score;
-                winner
-            }
+        if (winners.isEmpty()) {
+            System.out.println("No valid winners this round, sorry!");
+        } else {
+            System.out.println("Congratulations to....");
+            System.out.println(String.join(", ", winners) + " with " + highScore + " points!");
         }
-        System.out.println(playerAndScores.get());
-
     }
 
 }
