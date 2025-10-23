@@ -10,7 +10,7 @@ public class Card {
     public Card(String suit, String value) {
         this.suit = suit;
         this.value = value;
-        this.name = value + " of " + suit;
+        this.name = value + suit;
         this.isFaceUp = false;
     }
 
