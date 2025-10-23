@@ -24,6 +24,10 @@ public class Player {
         return hand.size();
     }
 
+    public ArrayList<Card> getHand() {
+        return this.hand;
+    }
+
     public int getValueOfHand() {
 
         int totalValue = 0;

@@ -35,4 +35,8 @@ public class Deck {
         return cards.size();
     }
 
+    public void addToDeck(ArrayList<Card> pile) {
+        this.cards.addAll(pile);
+    }
+
 }
