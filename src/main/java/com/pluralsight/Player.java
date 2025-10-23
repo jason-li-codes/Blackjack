@@ -5,11 +5,15 @@ import java.util.Objects;
 
 public class Player {
 
-    private String name;
+    private final String name;
     private ArrayList<Card> hand;
 
     public Player(String name) {
         this.name = name;
+    }
+
+    public String getName() {
+        return this.name;
     }
 
     public void deal(Card card) {
