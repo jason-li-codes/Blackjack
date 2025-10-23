@@ -43,11 +43,14 @@ public class Player {
             }
             card.flip();
         }
-        if (totalValue + aceCounter + 10 > 21) {
-            return totalValue + aceCounter;
-        } else {
-            return totalValue + aceCounter + 10;
+        if (aceCounter > 0) {
+            if (totalValue + aceCounter + 10 > 21) {
+                return totalValue + aceCounter;
+            } else {
+                return totalValue + aceCounter + 10;
+            }
         }
+        return totalValue;
     }
 
 }
